@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 96%;
+    --foreground: 220 20% 14%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 14%;
+
+    --primary: 207 90% 54%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 94%;
+    --secondary-foreground: 220 20% 14%;
+
+    --muted: 210 15% 92%;
+    --muted-foreground: 215 12% 50%;
+
+    --accent: 207 90% 94%;
+    --accent-foreground: 207 90% 34%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 207 90% 54%;
+
+    --radius: 0.75rem;
+
+    --calendar-accent: 207 90% 54%;
+    --calendar-accent-light: 207 90% 94%;
+    --calendar-weekend: 0 72% 55%;
+    --calendar-range: 207 90% 96%;
+    --calendar-paper: 40 20% 97%;
+    --calendar-shadow: 220 20% 14%;
+    --calendar-spiral: 220 10% 45%;
+    --calendar-hole: 220 10% 30%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .calendar-paper {
+    background: hsl(var(--calendar-paper));
+    box-shadow:
+      0 2px 8px hsl(var(--calendar-shadow) / 0.06),
+      0 8px 32px hsl(var(--calendar-shadow) / 0.08),
+      0 20px 60px hsl(var(--calendar-shadow) / 0.05);
+  }
+
+  .calendar-spiral-hole {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: hsl(var(--background));
+    border: 2px solid hsl(var(--calendar-spiral));
+    position: relative;
+  }
+
+  .calendar-spiral-hole::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 36px;
+    background: linear-gradient(
+      180deg,
+      hsl(var(--calendar-spiral)),
+      hsl(var(--calendar-spiral) / 0.6)
+    );
+    border-radius: 2px;
+    z-index: 10;
+  }
+
+  .day-cell {
+    @apply relative flex items-center justify-center cursor-pointer select-none transition-all duration-150;
+    aspect-ratio: 1;
+    border-radius: var(--radius);
+  }
+
+  .day-cell:hover:not(.day-disabled) {
+    background: hsl(var(--calendar-accent-light));
+  }
+
+  .day-start,
+  .day-end {
+    background: hsl(var(--calendar-accent)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+    font-weight: 700;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 8px hsl(var(--calendar-accent) / 0.4);
+  }
+
+  .day-in-range {
+    background: hsl(var(--calendar-range));
+    color: hsl(var(--accent-foreground));
+    border-radius: 0;
+  }
+
+  .day-in-range:first-of-type,
+  .day-start + .day-in-range {
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+
+  .day-weekend {
+    color: hsl(var(--calendar-weekend));
+  }
+
+  .day-disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .day-today {
+    font-weight: 700;
+    box-shadow: inset 0 0 0 2px hsl(var(--calendar-accent));
+  }
+
+  .notes-line {
+    border-bottom: 1px solid hsl(var(--border));
+    min-height: 28px;
+  }
+
+  .image-clip {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 70% 100%, 0 100%);
+  }
+}
+
+@layer utilities {
+  .text-calendar-accent {
+    color: hsl(var(--calendar-accent));
+  }
+}
